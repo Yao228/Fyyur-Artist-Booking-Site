@@ -18,7 +18,6 @@ from flask_migrate import Migrate
 from collections.abc import Callable
 from datetime import datetime
 import collections
-from flask_migrate import Migrate
 import sys
 #----------------------------------------------------------------------------#
 # App Config.
