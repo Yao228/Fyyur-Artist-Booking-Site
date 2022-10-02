@@ -124,7 +124,7 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
- 
+  current_time = datetime.now()
   data = {}
   venue = db.session.query(Venue).filter(Venue.id == venue_id).first()
   data["id"] = venue.id
@@ -144,7 +144,7 @@ def show_venue(venue_id):
   
   shows = db.session.query(Show).join(Artist).filter(Show.venue_id == venue_id).all()
   for show in shows:
-    if show.start_time.strftime('%Y-%m-%d %H:%M:%S') < current_time: 
+    if show.start_time < current_time: 
       data["past_shows"].append({
         "artist_id": show.artist_id,
         "artist_name": show.artists.name,
@@ -276,6 +276,7 @@ def search_artists():
 def show_artist(artist_id):
   # shows the artist page with the given artist_id
   # TODO: replace with real artist data from the artist table, using artist_id
+  current_time = datetime.now()
   data = {}
   artist = db.session.query(Artist).filter(Artist.id == artist_id).first()
   data["id"] = artist.id
@@ -294,7 +295,7 @@ def show_artist(artist_id):
 
   shows = db.session.query(Show).join(Venue).filter(Show.artist_id == artist_id).all()
   for show in shows: 
-    if show.start_time.strftime('%Y-%m-%d %H:%M:%S') > current_time:
+    if show.start_time > current_time:
       data["upcoming_shows"].append({
       "venue_id": show.venue_id,
       "venue_name": show.venues.name,
